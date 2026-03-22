@@ -1,3 +1,5 @@
 node_modules/.vite/
 coverage/
 node_modules/
+node_modules
+coverage

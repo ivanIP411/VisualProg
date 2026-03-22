@@ -41,6 +41,50 @@ export function having<T>(): Having<T> {
     return (predicate) => (groups) => groups.filter(predicate);
 }
 
+
+type Op<T> = {
+    run: (arr: any) => any;
+    tag: 'where' | 'groupby' | 'having' | 'sort'
+};
+
+export function w<T>() {
+    const fn = where<T>();
+    return (key: any, val: any): Op<T> => ({run: fn(key, val), tag: 'where'});
+}
+
+export function g<T>() {
+    const fn = groupby<T>();
+    return (key: any): Op<T> => ({ run: fn(key), tag: 'groupby' });
+}
+
+export function h<T>() {
+    const fn = having<T>();
+    return (pred: any): Op<T> => ({ run: fn(pred), tag: 'having' });
+}
+
+export function s<T>() {
+    const fn = sort<T>();
+    return (key: any): Op<T> => ({ run: fn(key), tag: 'sort' });
+}
+
+type Check<O extends Op<any>[]> = 
+    O extends [] ? true :
+    O extends [infer A] ? true :
+    O extends [infer A, infer B, ...infer R] ?
+        A extends Op<any> ? B extends Op<any> ? R extends Op<any>[] ?
+            [A['tag'], B['tag']] extends ['where', 'having'] ? false :
+            [A['tag'], B['tag']] extends ['where', 'sort'] ? false :
+            [A['tag'], B['tag']] extends ['groupby', 'where'] ? false :
+            [A['tag'], B['tag']] extends ['groupby', 'sort'] ? false :
+            [A['tag'], B['tag']] extends ['having', 'where'] ? false :
+            [A['tag'], B['tag']] extends ['having', 'groupby'] ? false :
+            [A['tag'], B['tag']] extends ['sort', 'where'] ? false :
+            [A['tag'], B['tag']] extends ['sort', 'groupby'] ? false :
+            [A['tag'], B['tag']] extends ['sort', 'having'] ? false :
+            Check<[B, ...R]>
+        : false : false : false
+    : true;
+
 export function query<T, K extends keyof T = any>(...steps: Array<Transform<T> | ((arr: T[]) => Group<T, K>[]) | GroupTransform<T, K>>): Transform<T> {
     return (arr) => {
         let result: any = arr;
@@ -48,5 +92,13 @@ export function query<T, K extends keyof T = any>(...steps: Array<Transform<T> |
             result = steps[i](result);
         }
         return result;
+    };
+}
+
+export function queryT<T, O extends Op<any>[]>(...ops: O & (Check<O> extends true ? O : never)) {
+    return (arr: T[]) => {
+        let res: any = arr;
+        for (let op of ops) res = op.run(res);
+        return res;
     };
 }
