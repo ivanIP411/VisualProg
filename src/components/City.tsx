@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function CitySelector({ onSelect }: { onSelect: (city: string) => void }) {
+function City({ onSelect }: { onSelect: (city: string) => void }) {
     const [input, setInput] = useState('');
     
     const handleSubmit = (e: React.FormEvent) => {
@@ -21,4 +21,4 @@ function CitySelector({ onSelect }: { onSelect: (city: string) => void }) {
     );
 }
 
-export default CitySelector;
+export default City;

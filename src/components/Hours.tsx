@@ -1,6 +1,6 @@
 import type { HoursData } from '../type/weather';
 
-function HourlyForecast({ data }: { data: HoursData[] }) {
+function Hours({ data }: { data: HoursData[] }) {
     return (
         <div className="hourly-grid">
             {data.map((item, idx) => {
@@ -19,4 +19,4 @@ function HourlyForecast({ data }: { data: HoursData[] }) {
     );
 }
 
-export default HourlyForecast;
+export default Hours;

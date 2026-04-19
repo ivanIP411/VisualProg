@@ -1,6 +1,6 @@
 import type { WeatherData } from '../type/weather';
 
-function WeatherDetails({ weather }: { weather: WeatherData }) {
+function Detail({ weather }: { weather: WeatherData }) {
     const pressureMm = Math.round(weather.pressure * 0.750062);
     
     return (
@@ -25,4 +25,4 @@ function WeatherDetails({ weather }: { weather: WeatherData }) {
     );
 }
 
-export default WeatherDetails;
+export default Detail;

@@ -1,6 +1,6 @@
 import type { DaysData } from '../type/weather';
 
-function DailyForecast({ data }: { data: DaysData[] }) {
+function Days({ data }: { data: DaysData[] }) {
     return (
         <div className="daily-list">
             {data.map((item, idx) => {
@@ -21,4 +21,4 @@ function DailyForecast({ data }: { data: DaysData[] }) {
     );
 }
 
-export default DailyForecast;
+export default Days;

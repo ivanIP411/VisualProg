@@ -1,6 +1,6 @@
 import type { WeatherData } from '../type/weather';
 
-function CurrentWeather({data, city}: {data: WeatherData; city: string}) {
+function Current({data, city}: {data: WeatherData; city: string}) {
     const date = new Date();
     const day = date.toLocaleDateString('ru-RU', {weekday: 'long', day: 'numeric', month: 'long'});
     const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
@@ -21,4 +21,4 @@ function CurrentWeather({data, city}: {data: WeatherData; city: string}) {
     );
 }
 
-export default CurrentWeather;
+export default Current;
