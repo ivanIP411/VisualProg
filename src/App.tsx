@@ -18,33 +18,21 @@ function App() {
                     authors: doc.author_name
                 }));
                 
-                const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-                
-                const booksWithImages = [];
-                for (const book of booksData) {
-                    let thumbnail = '';
-                    
-                    if (book.isbn) {
-                        try {
-                            await delay(200);
-                            
-                            const response = await fetch(
-                                `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`
-                            );
-                            
-                            if (response.ok) {
-                                const googleData = await response.json();
-                                if (googleData.items && googleData.items[0]?.volumeInfo?.imageLinks?.thumbnail) {
-                                    thumbnail = googleData.items[0].volumeInfo.imageLinks.thumbnail;
-                                }
-                            }
-                        } catch (err) {
-                            console.error('Ошибка загрузки', err);
+                const booksWithImages = await Promise.all(
+                    booksData.map(async (book) => {
+                        const response = await fetch(
+                            `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}`
+                        );
+                        const googleData = await response.json();
+                        
+                        let thumbnail = '';
+                        if (googleData.items && googleData.items[0]?.volumeInfo?.imageLinks?.thumbnail) {
+                            thumbnail = googleData.items[0].volumeInfo.imageLinks.thumbnail;
                         }
-                    }
-                    
-                    booksWithImages.push({ ...book, thumbnail });
-                }
+                        
+                        return { ...book, thumbnail };
+                    })
+                );
                 
                 setBooks(booksWithImages);
             })
