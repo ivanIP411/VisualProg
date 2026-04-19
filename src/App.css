@@ -1,46 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .app {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-.books-grid {
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
 }
 
-.book-card {
-    width: 200px;
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.phone {
+    width: 375px;
+    height: 650px;
+    border-radius: 44px;
+    padding: 20px 16px;
+    overflow-y: auto;
+    color: white;
     text-align: center;
+    box-shadow: 0 0 0 8px #2c2c2c, 0 25px 50px rgba(0, 0, 0, 0.3);
 }
 
-.book-cover {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.phone::-webkit-scrollbar {
+    display: none;
 }
 
-.book-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0 5px;
-    color: #333;
+.phone.sunny { background: linear-gradient(135deg, #f5af19, #f12711); }
+.phone.clouds { background: linear-gradient(135deg, #bdc3c7, #2c3e50); }
+.phone.rain { background: linear-gradient(135deg, #4b6cb7, #182848); }
+.phone.snow { background: linear-gradient(135deg, #e0eafc, #cfdef3); color: #333; }
+.phone.default { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+
+.city-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
-.book-authors {
+.city-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
     font-size: 14px;
-    color: #666;
+    outline: none;
+}
+
+.city-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+.city-form button {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.current {
+    margin-bottom: 20px;
+}
+
+.current .date {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.temp-city {
+    text-align: left;
+}
+
+.city {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.temp {
+    font-size: 52px;
+    font-weight: 300;
+}
+
+.weather-icon img {
+    width: 70px;
+    height: 70px;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+    padding: 10px 0;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.detail-value {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.hourly-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    margin: 15px 0;
+    padding-bottom: 5px;
+}
+
+.hourly-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.hourly-card {
+    text-align: center;
+    min-width: 55px;
+}
+
+.hourly-card .hour {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.hourly-card img {
+    width: 35px;
+    height: 35px;
+    margin: 5px 0;
+}
+
+.hourly-card .hourly-temp {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.daily-list {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.daily-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.daily-card:last-child {
+    border-bottom: none;
+}
+
+.daily-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.daily-card .day {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.daily-card img {
+    width: 28px;
+    height: 28px;
+}
+
+.daily-card .daily-temp {
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: right;
 }
