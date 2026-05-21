@@ -54,3 +54,14 @@ export function formula(
     return NaN;
   }
 }
+export type Document = {
+  id: string;
+  name: string;
+  createdAt: number;
+  updatedAt: number;
+  rows: number;
+  cols: number;
+  cells: Record<string, CellData>;
+  colW: number[];
+  rowH: number[];
+};
