@@ -1,40 +1,25 @@
 import React, { useState } from 'react';
-import type { Document } from '../types';
-import { deleteDoc, updateDoc, duplicateDoc } from './Doc';
+import { useAppDispatch } from '../app/hooks';
+import { renameDoc, removeDoc, copyDoc } from '../slices/docSlice';
 import Modal from './Modal';
+import type { Document } from '../types';
 
-interface DashboardProps {
-  docs: Document[];
-  onSelect: (id: string) => void;
-  onCreate: () => void;
-}
-function Dashbord({ docs, onSelect, onCreate }: DashboardProps) {
+function Dashbord({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (id: string) => void; onCreate: () => void }) {
+  const dispatch = useAppDispatch();
   const [renameTarget, setRenameTarget] = useState<Document | null>(null);
   const [newName, setNewName] = useState('');
 
-  const startRename = (doc: Document) => {
-    setRenameTarget(doc);
-    setNewName(doc.name);
-  };
+  const startRename = (doc: Document) => { setRenameTarget(doc); setNewName(doc.name); };
   const saveRename = () => {
-    if (!renameTarget) return;
-    const updated = { ...renameTarget, name: newName.trim(), updatedAt: Date.now() };
-    updateDoc(updated);
-    setRenameTarget(null);
-    window.location.reload();
-  };
-  const handleDelete = (id: string) => {
-    if (window.confirm('Удалить документ?')) {
-      deleteDoc(id);
-      window.location.reload();
+    if (renameTarget) {
+      dispatch(renameDoc({ id: renameTarget.id, name: newName.trim() }));
+      setRenameTarget(null);
     }
   };
-  const handleDuplicate = (id: string) => {
-    duplicateDoc(id);
-    window.location.reload();
-  };
+  const handleDelete = (id: string) => { if (window.confirm('Удалить документ?')) dispatch(removeDoc(id)); };
+  const handleCopy = (id: string) => { dispatch(copyDoc(id)); };
   return (
-    <div className="Dashbord">
+    <div className="dashbord">
       <button onClick={onCreate}>Новый документ</button>
       <div className="doc-list">
         {docs.map(doc => (
@@ -42,7 +27,7 @@ function Dashbord({ docs, onSelect, onCreate }: DashboardProps) {
             <h3 onClick={() => onSelect(doc.id)}>{doc.name}</h3>
             <div className="doc-meta">
               <span>Создан: {new Date(doc.createdAt).toLocaleDateString()}</span>
-              <span>Изменен: {new Date(doc.updatedAt).toLocaleDateString()}</span>
+              <span>Изменён: {new Date(doc.updatedAt).toLocaleDateString()}</span>
             </div>
             <div className="doc-preview">
               {(() => {
@@ -61,7 +46,7 @@ function Dashbord({ docs, onSelect, onCreate }: DashboardProps) {
             <div className="doc-actions">
               <button onClick={() => startRename(doc)}>Переименовать</button>
               <button onClick={() => handleDelete(doc.id)}>Удалить</button>
-              <button onClick={() => handleDuplicate(doc.id)}>Копировать</button>
+              <button onClick={() => handleCopy(doc.id)}>Копировать</button>
             </div>
           </div>
         ))}
