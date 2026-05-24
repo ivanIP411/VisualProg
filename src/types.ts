@@ -64,4 +64,5 @@ export type Document = {
   cells: Record<string, CellData>;
   colW: number[];
   rowH: number[];
+  userId?: string;
 };

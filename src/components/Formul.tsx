@@ -5,7 +5,6 @@ interface FormulProps {
   onChange: (val: string) => void;
   onEnter: () => void;
 }
-
 function Formul({ value, onChange, onEnter }: FormulProps) {
   const [localValue, setLocalValue] = useState<string>(value);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,5 +37,4 @@ function Formul({ value, onChange, onEnter }: FormulProps) {
     </div>
   );
 }
-
 export default Formul;

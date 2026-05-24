@@ -2,11 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import sheet from '../slices/sheetSlice';
 import docs from '../slices/docSlice';
 import ui from '../slices/uiSlice';
-import auth from '../slices/authSlice';
 import { autoSave } from '../middleware/autosave';
 
 export const store = configureStore({
-  reducer: { sheet, docs, ui, auth },
+  reducer: { sheet, docs, ui },
   middleware: (getDefault) => getDefault().concat(autoSave),
 });
 

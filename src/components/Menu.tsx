@@ -23,5 +23,4 @@ function Menu({ x, y, onAddRow, onAddCol, onDeleteRow, onDeleteCol, onClose }: M
     </div>
   );
 }
-
 export default Menu;
