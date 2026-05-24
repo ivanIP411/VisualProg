@@ -13,8 +13,14 @@ function Register() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr('');
-    if (pass !== pass2) { setErr('Пароли не совпадают'); return; }
-    if (pass.length < 8) { setErr('Пароль минимум 8 символов'); return; }
+    if (pass !== pass2) {
+      setErr('Пароли не совпадают');
+      return;
+    }
+    if (pass.length < 8) {
+      setErr('Пароль минимум 8 символов');
+      return;
+    }
     try {
       await register(name, email, pass);
       nav('/dashboard');
@@ -31,13 +37,39 @@ function Register() {
       <h2>Регистрация</h2>
       {err && <div className="err">{err}</div>}
       <form onSubmit={submit}>
-        <input type="text" placeholder="Имя" value={name} onChange={e => setName(e.target.value)} required />
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Пароль (>= 8)" value={pass} onChange={e => setPass(e.target.value)} required />
-        <input type="password" placeholder="Повторите пароль" value={pass2} onChange={e => setPass2(e.target.value)} required />
+        <input
+          type="text"
+          placeholder="Имя"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Пароль (>= 8)"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Повторите пароль"
+          value={pass2}
+          onChange={(e) => setPass2(e.target.value)}
+          required
+        />
         <button type="submit">Зарегистрироваться</button>
       </form>
-      <p>Уже есть аккаунт? <Link to="/login">Войти</Link></p>
+      <p>
+        Уже есть аккаунт? <Link to="/login">Войти</Link>
+      </p>
     </div>
   );
 }

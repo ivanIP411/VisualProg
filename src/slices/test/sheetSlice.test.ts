@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import sheetReducer, {updCell, addRow, addCol, delRow, delCol, setColW, setRowH, undo, redo} from '../sheetSlice';
+import sheetReducer, {
+  updCell,
+  addRow,
+  addCol,
+  delRow,
+  delCol,
+  setColW,
+  setRowH,
+  undo,
+  redo,
+} from '../sheetSlice';
 
 describe('sheetSlice', () => {
   it('Обновляет ячейку и сохраняет историю', () => {

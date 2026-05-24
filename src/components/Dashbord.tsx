@@ -4,25 +4,40 @@ import { renameDoc, removeDoc, copyDoc } from '../slices/docSlice';
 import Modal from './Modal';
 import type { Document } from '../types';
 
-function Dashboard({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (id: string) => void; onCreate: () => void }) {
+function Dashboard({
+  docs,
+  onSelect,
+  onCreate,
+}: {
+  docs: Document[];
+  onSelect: (id: string) => void;
+  onCreate: () => void;
+}) {
   const dispatch = useAppDispatch();
   const [renameTarget, setRenameTarget] = useState<Document | null>(null);
   const [newName, setNewName] = useState('');
 
-  const startRename = (doc: Document) => { setRenameTarget(doc); setNewName(doc.name); };
+  const startRename = (doc: Document) => {
+    setRenameTarget(doc);
+    setNewName(doc.name);
+  };
   const saveRename = () => {
     if (renameTarget) {
       dispatch(renameDoc({ id: renameTarget.id, name: newName.trim() }));
       setRenameTarget(null);
     }
   };
-  const handleDelete = (id: string) => { if (window.confirm('Удалить документ?')) dispatch(removeDoc(id)); };
-  const handleCopy = (id: string) => { dispatch(copyDoc(id)); };
+  const handleDelete = (id: string) => {
+    if (window.confirm('Удалить документ?')) dispatch(removeDoc(id));
+  };
+  const handleCopy = (id: string) => {
+    dispatch(copyDoc(id));
+  };
   return (
     <div className="dashboard">
       <button onClick={onCreate}>Новый документ</button>
       <div className="doc-list">
-        {docs.map(doc => (
+        {docs.map((doc) => (
           <div key={doc.id} className="doc-card">
             <h3 onClick={() => onSelect(doc.id)}>{doc.name}</h3>
             <div className="doc-meta">
@@ -53,7 +68,7 @@ function Dashboard({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (
       </div>
       <Modal open={!!renameTarget} onClose={() => setRenameTarget(null)}>
         <h3>Переименовать</h3>
-        <input value={newName} onChange={e => setNewName(e.target.value)} />
+        <input value={newName} onChange={(e) => setNewName(e.target.value)} />
         <button onClick={saveRename}>Сохранить</button>
       </Modal>
     </div>

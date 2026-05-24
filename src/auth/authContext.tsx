@@ -1,5 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getUser, login as apiLogin, register as apiReg, logout as apiLogout, refresh, getCurrentUserSync } from './auth';
+import {
+  getUser,
+  login as apiLogin,
+  register as apiReg,
+  logout as apiLogout,
+  refresh,
+  getCurrentUserSync,
+} from './auth';
 
 type User = { id: string; name: string; email: string } | null;
 

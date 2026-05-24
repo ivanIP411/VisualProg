@@ -14,10 +14,7 @@ export function parseCoord(ref: string): Coord {
   }
   return { row: parseInt(match[2]) - 1, col: col - 1 };
 }
-export function formula(
-  formula: string,
-  getCellValue: (coord: Coord) => number
-): number {
+export function formula(formula: string, getCellValue: (coord: Coord) => number): number {
   try {
     let expr = formula.slice(1).trim().toUpperCase();
     const sumMatch = expr.match(/SUM\(([A-Z]+[0-9]+):([A-Z]+[0-9]+)\)/);
@@ -36,7 +33,8 @@ export function formula(
     if (avgMatch) {
       const start = parseCoord(avgMatch[1]);
       const end = parseCoord(avgMatch[2]);
-      let total = 0, count = 0;
+      let total = 0,
+        count = 0;
       for (let r = start.row; r <= end.row; r++) {
         for (let c = start.col; c <= end.col; c++) {
           total += getCellValue({ row: r, col: c });

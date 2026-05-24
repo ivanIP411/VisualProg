@@ -48,7 +48,7 @@ function Cell({
   };
   const finishLocalEdit = () => {
     onEditChange(localText);
-    onEditFinish(); 
+    onEditFinish();
   };
   if (isEditing) {
     return (

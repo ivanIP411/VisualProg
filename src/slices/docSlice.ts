@@ -28,29 +28,35 @@ export const saveDoc = createAsyncThunk('docs/save', async (_, { getState }) => 
     return upd;
   }
 });
-export const createDoc = createAsyncThunk('docs/create', async (data: { name: string; rows: number; cols: number }) => {
-  const id = Date.now().toString();
-  const newDoc: Document = {
-    id,
-    name: data.name || 'Без имени',
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    rows: data.rows,
-    cols: data.cols,
-    cells: {},
-    colW: Array(data.cols).fill(100),
-    rowH: Array(data.rows).fill(25),
-  };
-  addDoc(newDoc);
-  return newDoc;
-});
-export const renameDoc = createAsyncThunk('docs/rename', async ({ id, name }: { id: string; name: string }) => {
-  const doc = getDoc(id);
-  if (!doc) throw new Error('not found');
-  const upd = { ...doc, name, updatedAt: Date.now() };
-  updateDoc(upd);
-  return upd;
-});
+export const createDoc = createAsyncThunk(
+  'docs/create',
+  async (data: { name: string; rows: number; cols: number }) => {
+    const id = Date.now().toString();
+    const newDoc: Document = {
+      id,
+      name: data.name || 'Без имени',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      rows: data.rows,
+      cols: data.cols,
+      cells: {},
+      colW: Array(data.cols).fill(100),
+      rowH: Array(data.rows).fill(25),
+    };
+    addDoc(newDoc);
+    return newDoc;
+  }
+);
+export const renameDoc = createAsyncThunk(
+  'docs/rename',
+  async ({ id, name }: { id: string; name: string }) => {
+    const doc = getDoc(id);
+    if (!doc) throw new Error('not found');
+    const upd = { ...doc, name, updatedAt: Date.now() };
+    updateDoc(upd);
+    return upd;
+  }
+);
 export const removeDoc = createAsyncThunk('docs/remove', async (id: string) => {
   deleteDoc(id);
   return id;
@@ -69,16 +75,22 @@ const docsSlice = createSlice({
     },
   },
   extraReducers: (b) => {
-    b.addCase(fetchDocs.fulfilled, (s, a) => { s.list = a.payload; });
-    b.addCase(createDoc.fulfilled, (s, a) => { s.list.push(a.payload); });
-    b.addCase(copyDoc.fulfilled, (s, a) => { s.list.push(a.payload); });
+    b.addCase(fetchDocs.fulfilled, (s, a) => {
+      s.list = a.payload;
+    });
+    b.addCase(createDoc.fulfilled, (s, a) => {
+      s.list.push(a.payload);
+    });
+    b.addCase(copyDoc.fulfilled, (s, a) => {
+      s.list.push(a.payload);
+    });
     b.addCase(renameDoc.fulfilled, (s, a) => {
-      const idx = s.list.findIndex(d => d.id === a.payload.id);
+      const idx = s.list.findIndex((d) => d.id === a.payload.id);
       if (idx !== -1) s.list[idx] = a.payload;
       if (s.curId === a.payload.id) s.curId = a.payload.id;
     });
     b.addCase(removeDoc.fulfilled, (s, a) => {
-      s.list = s.list.filter(d => d.id !== a.payload);
+      s.list = s.list.filter((d) => d.id !== a.payload);
       if (s.curId === a.payload) s.curId = null;
     });
   },

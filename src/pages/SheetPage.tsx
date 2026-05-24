@@ -9,7 +9,7 @@ import Sheet from '../components/Sheet';
 function SheetPage() {
   const { documentId } = useParams();
   const dispatch = useAppDispatch();
-  const curId = useAppSelector(s => s.docs.curId);
+  const curId = useAppSelector((s) => s.docs.curId);
   const [allowed, setAllowed] = useState<boolean | null>(null);
   const [docData, setDocData] = useState<any>(null);
 
@@ -29,15 +29,17 @@ function SheetPage() {
 
   useEffect(() => {
     if (allowed && docData && documentId && documentId !== curId) {
-      dispatch(load({
-        cells: docData.cells,
-        rows: docData.rows,
-        cols: docData.cols,
-        colW: docData.colW,
-        rowH: docData.rowH,
-        sel: null,
-        range: null,
-      }));
+      dispatch(
+        load({
+          cells: docData.cells,
+          rows: docData.rows,
+          cols: docData.cols,
+          colW: docData.colW,
+          rowH: docData.rowH,
+          sel: null,
+          range: null,
+        })
+      );
       dispatch(setCurId(documentId));
       dispatch(setSel(null));
       dispatch(setRange(null));

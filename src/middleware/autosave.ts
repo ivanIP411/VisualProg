@@ -7,7 +7,15 @@ export const autoSave: Middleware = (store) => (next) => (action) => {
   const result = next(action);
   if (isAction(action)) {
     const type = action.type;
-    const types = ['sheet/updCell', 'sheet/addRow', 'sheet/delRow','sheet/addCol', 'sheet/delCol', 'sheet/setColW', 'sheet/setRowH'];
+    const types = [
+      'sheet/updCell',
+      'sheet/addRow',
+      'sheet/delRow',
+      'sheet/addCol',
+      'sheet/delCol',
+      'sheet/setColW',
+      'sheet/setRowH',
+    ];
     if (types.includes(type)) {
       if (timer) clearTimeout(timer);
       store.dispatch(setSaveStatus('saving'));

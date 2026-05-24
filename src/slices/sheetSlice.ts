@@ -58,7 +58,9 @@ const sheetSlice = createSlice({
       state.future = [];
       const { row, col, raw } = action.payload;
       const key = `${row},${col}`;
-      let formulaStr = '', val: string | number = raw, disp = raw;
+      let formulaStr = '',
+        val: string | number = raw,
+        disp = raw;
       if (raw.startsWith('=')) {
         formulaStr = raw;
         const getNumber = (coord: Coord) => {
@@ -104,10 +106,18 @@ const sheetSlice = createSlice({
       }
       if (changed) state.cells = newCells;
     },
-    setSel(state, action: PayloadAction<Coord | null>) { state.sel = action.payload; },
-    setRange(state, action: PayloadAction<{ start: Coord; end: Coord } | null>) { state.range = action.payload; },
-    setRows(state, action: PayloadAction<number>) { state.rows = action.payload; },
-    setCols(state, action: PayloadAction<number>) { state.cols = action.payload; },
+    setSel(state, action: PayloadAction<Coord | null>) {
+      state.sel = action.payload;
+    },
+    setRange(state, action: PayloadAction<{ start: Coord; end: Coord } | null>) {
+      state.range = action.payload;
+    },
+    setRows(state, action: PayloadAction<number>) {
+      state.rows = action.payload;
+    },
+    setCols(state, action: PayloadAction<number>) {
+      state.cols = action.payload;
+    },
     setColW(state, action: PayloadAction<{ idx: number; w: number }>) {
       state.past.push(takeSnapshot(state));
       state.future = [];
@@ -176,9 +186,20 @@ const sheetSlice = createSlice({
 });
 
 export const {
-  load, updCell, recalc,
-  setSel, setRange, setRows, setCols,
-  setColW, setRowH, addRow, delRow, addCol, delCol,
-  undo, redo,
+  load,
+  updCell,
+  recalc,
+  setSel,
+  setRange,
+  setRows,
+  setCols,
+  setColW,
+  setRowH,
+  addRow,
+  delRow,
+  addCol,
+  delCol,
+  undo,
+  redo,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;

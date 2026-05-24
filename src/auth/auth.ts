@@ -1,4 +1,10 @@
-import { setAccessToken, clearTokens, getAccessToken, setRefreshToken, getRefreshToken } from './token';
+import {
+  setAccessToken,
+  clearTokens,
+  getAccessToken,
+  setRefreshToken,
+  getRefreshToken,
+} from './token';
 
 type User = { id: string; name: string; email: string; pass: string };
 
@@ -18,7 +24,9 @@ export function getCurrentUserSync(): { id: string } | null {
     const d = JSON.parse(atob(t));
     if (d.exp < Date.now()) return null;
     return { id: d.userId };
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 export async function getUser() {
   const t = getAccessToken();
@@ -27,15 +35,17 @@ export async function getUser() {
     const d = JSON.parse(atob(t));
     if (d.exp < Date.now()) return null;
     const users = loadUsers();
-    const user = users.find(u => u.id === d.userId);
+    const user = users.find((u) => u.id === d.userId);
     if (!user) return null;
     return { id: user.id, name: user.name, email: user.email };
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 export async function register(name: string, email: string, pass: string) {
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 500));
   const users = loadUsers();
-  if (users.find(u => u.email === email)) throw new Error('Email уже существует');
+  if (users.find((u) => u.email === email)) throw new Error('Email уже существует');
   const id = Date.now().toString();
   const newUser = { id, name, email, pass };
   users.push(newUser);
@@ -47,9 +57,9 @@ export async function register(name: string, email: string, pass: string) {
   return { id, name, email };
 }
 export async function login(email: string, pass: string) {
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 500));
   const users = loadUsers();
-  const u = users.find(u => u.email === email && u.pass === pass);
+  const u = users.find((u) => u.email === email && u.pass === pass);
   if (!u) throw new Error('Неверный email или пароль');
   const acc = btoa(JSON.stringify({ userId: u.id, exp: Date.now() + 15 * 60000 }));
   const ref = btoa(JSON.stringify({ userId: u.id, exp: Date.now() + 7 * 86400000 }));

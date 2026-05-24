@@ -29,11 +29,25 @@ function Login() {
       <h2>Вход</h2>
       {err && <div className="err">{err}</div>}
       <form onSubmit={submit}>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Пароль" value={pass} onChange={e => setPass(e.target.value)} required />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          required
+        />
         <button type="submit">Войти</button>
       </form>
-      <p>Нет аккаунта? <Link to="/register">Регистрация</Link></p>
+      <p>
+        Нет аккаунта? <Link to="/register">Регистрация</Link>
+      </p>
     </div>
   );
 }

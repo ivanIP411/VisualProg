@@ -9,8 +9,12 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: init,
   reducers: {
-    openModal(state) { state.newModal = true; },
-    closeModal(state) { state.newModal = false; },
+    openModal(state) {
+      state.newModal = true;
+    },
+    closeModal(state) {
+      state.newModal = false;
+    },
     setSaveStatus(state, action: PayloadAction<UiState['saveStatus']>) {
       state.saveStatus = action.payload;
     },

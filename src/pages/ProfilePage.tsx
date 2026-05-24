@@ -12,8 +12,12 @@ function ProfilePage() {
   return (
     <div className="profile-page">
       <h2>Профиль</h2>
-      <p><strong>Имя:</strong> {user.name || '—'}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      <p>
+        <strong>Имя:</strong> {user.name || '—'}
+      </p>
+      <p>
+        <strong>Email:</strong> {user.email}
+      </p>
       <button onClick={handleLogout}>Выйти</button>
     </div>
   );
