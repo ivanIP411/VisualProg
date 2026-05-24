@@ -4,7 +4,7 @@ import { renameDoc, removeDoc, copyDoc } from '../slices/docSlice';
 import Modal from './Modal';
 import type { Document } from '../types';
 
-function Dashbord({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (id: string) => void; onCreate: () => void }) {
+function Dashboard({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (id: string) => void; onCreate: () => void }) {
   const dispatch = useAppDispatch();
   const [renameTarget, setRenameTarget] = useState<Document | null>(null);
   const [newName, setNewName] = useState('');
@@ -19,7 +19,7 @@ function Dashbord({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (i
   const handleDelete = (id: string) => { if (window.confirm('Удалить документ?')) dispatch(removeDoc(id)); };
   const handleCopy = (id: string) => { dispatch(copyDoc(id)); };
   return (
-    <div className="dashbord">
+    <div className="dashboard">
       <button onClick={onCreate}>Новый документ</button>
       <div className="doc-list">
         {docs.map(doc => (
@@ -59,4 +59,4 @@ function Dashbord({ docs, onSelect, onCreate }: { docs: Document[]; onSelect: (i
     </div>
   );
 }
-export default Dashbord;
+export default Dashboard;

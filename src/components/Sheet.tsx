@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { updCell, setSel, setRange, setColW, setRowH, addRow, delRow, addCol, delCol, undo, redo, load, recalc } from '../slices/sheetSlice';
-import { setCurId } from '../slices/docSlice';
 import type { CellData } from '../types';
 import Cell from './Cell';
 import FormulaBar from './Formul';
@@ -28,6 +27,17 @@ function Sheet() {
   useEffect(() => {
   dispatch(recalc());
   }, [cells, dispatch]);
+
+  useEffect(() => {
+  const warn = (e: BeforeUnloadEvent) => {
+    if (saveStatus !== 'saved') {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
+  window.addEventListener('beforeunload', warn);
+  return () => window.removeEventListener('beforeunload', warn);
+  }, [saveStatus]);
 
   const startEdit = (row: number, col: number) => {
     const key = `${row},${col}`;
@@ -122,7 +132,7 @@ function Sheet() {
     const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'sheet.csv';
+    a.download = 'file.csv';
     a.click();
   };
 
@@ -131,7 +141,7 @@ function Sheet() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'sheet.json';
+    a.download = 'file.json';
     a.click();
   };
 
@@ -191,7 +201,6 @@ function Sheet() {
   return (
     <div className="app">
       <div className="toolbar">
-        <button onClick={() => dispatch(setCurId(null))}>Назад</button>
         <button onClick={exportCSV}>CSV</button>
         <button onClick={exportJSON}>JSON</button>
         <input type="file" accept=".csv" onChange={e => e.target.files && importCSV(e.target.files[0])} />

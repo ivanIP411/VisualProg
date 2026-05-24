@@ -165,3 +165,26 @@ html, body, #root {
   margin-left: auto;
   font-size: 14px;
 }
+.app-layout {
+  display: flex;
+}
+.sidebar {
+  width: 180px;
+  background: #eee;
+  padding: 15px;
+}
+.sidebar a {
+  display: block;
+  margin: 10px 0;
+  color: #333;
+}
+.main {
+  flex: 1;
+  padding: 15px;
+}
+.breadcrumbs {
+  margin-bottom: 10px;
+}
+.breadcrumbs a {
+  color: #0066cc;
+}
